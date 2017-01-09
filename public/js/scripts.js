@@ -74,8 +74,60 @@ $(function() {
  */
 function addMarker(place)
 {
-    // TODO
+    // coordinates of place
+    var LatLng = new google.maps.LatLng(place.latitude, place.longitude);
+
+    var image = 'http://maps.google.com/mapfiles/ms/micons/info.png';
+    var marker = new MarkerWithLabel({
+       position: LatLng,
+       map: map,
+       icon: image,
+       labelContent: (place.place_name+", "+place.admin_name1),
+       labelAnchor: new google.maps.Point(75, 0),
+       labelClass: "labels", // the CSS class for the label
+    });
+    
+    // open info window on click
+    marker.addListener("click", function () 
+    {
+
+        // set parameter as postal code
+        var parameters = {geo: place.postal_code};
+    
+        // use getJSON to load from articles.php
+        $.getJSON("articles.php", parameters)
+        .done(function(data, textStatus, jqXHR) 
+        {
+    
+        var l = data.length;
+    
+        // list articles in info window
+        var articles = "<ul>";
+        
+            // if there are articles, show title as link
+            if (l != 0)
+            {
+                for (var i = 0; i < l; i++)
+                {
+                    articles+= "<li><a href="+data[i].link+">"+data[i].title+"</a></li>";
+                }
+            }
+            else
+            {
+                articles+= "<li><em>Slow news day!</em></li>";
+            }
+        articles+= "</ul>";
+        info.open(map, marker);
+        showInfo(marker, articles);
+        });
+    });
+    // add markers to array
+    markers.push(marker);
+
+    
 }
+
+
 
 /**
  * Configures application.
