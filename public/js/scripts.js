@@ -102,7 +102,7 @@ function addMarker(place)
         var l = data.length;
     
         // list articles in info window
-        var articles = "<center><h1><b>"+place.place_name+"</b></h1></center><br>Number of articles today: "+l+"<br><ul>";
+        var articles = "<center><h3><b>"+place.place_name+place.admin_name1+"</b></h3></center>Number of articles today: "+l+"<br><ul>";
         
             // if there are articles, show title as link
             if (l != 0)
