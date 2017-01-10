@@ -90,7 +90,9 @@ function addMarker(place)
     // open info window on click
     marker.addListener("click", function () 
     {
-
+        // turn the icon green to indicate it has been read
+        marker.setIcon("http://maps.google.com/mapfiles/ms/micons/green.png"); 
+        
         // set parameter as postal code
         var parameters = {geo: place.postal_code};
     
@@ -215,6 +217,7 @@ function removeMarkers()
   {
     markers[i].setMap(null);
   }
+  markers=[];
 }
 
 /**
